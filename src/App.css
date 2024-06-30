@@ -1,38 +1,90 @@
-.App {
-  text-align: center;
+:root {
+  --background-color: #ffffff
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  
+  background-color: hsl(202, 92%, 66%);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#root {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  /* margin: 0 auto; */
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-.App-link {
-  color: #61dafb;
+.app {
+  padding: 5px;
+  width: 100%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-search {
+  display: flex;
+  height: 2.3rem;
+  /* min-width: 50%; */
+  /* width: 800px; */
+  /* height: 100px; */
+  /* border: 1px solid black; */
 }
+
+.app-search-input {
+  flex-grow: 1;
+  padding-left: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  min-width: none;
+  border: 0;
+  background-color: hsl(202, 61%, 78%);
+  outline: none;
+  border-radius: 0.4rem 0rem 0rem 0.4rem;
+}
+
+.app-search-button {
+  border: none;
+  background-color: hsl(135, 76%, 53%);
+  height: 100%;
+  width: 10px;
+  min-width: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  outline: none;
+  border-radius: 0 0.4rem 0.5rem 0;
+}
+
+.app-search-input:focus + .app-search-button {
+  outline: none;
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+  /* outline: 1px solid hsl(0, 0%, 100%); */
+}
+.app-search-input:focus {
+  /* outline: 1px solid hsl(0, 0%, 100%); */
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.app-search-img {
+  max-width: 80%;
+}
+
+.app-search-autocomplete-container {
+  /* display: none; */
+  position: relative; 
+  top: 100;
+  left: 0;
+  width: 100%;
+  background-color:   hsl(202, 61%, 78%);;
+}
+
+.app-search-autocomplete-element {
+  padding: 1rem 1rem 1rem 1rem;
+}
+
+/* .app-search-input:focus + .app-search-autocomplete-container {
+  display: block;
+} */
