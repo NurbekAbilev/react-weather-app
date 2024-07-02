@@ -74,15 +74,21 @@ body {
 
 .app-search-autocomplete-container {
   /* display: none; */
-  position: relative; 
-  top: 100;
+  position: absolute; 
+  top: 100%;
   left: 0;
-  width: 100%;
-  background-color:   hsl(202, 61%, 78%);;
+  right: 0;
+  /* width: 100%; */
+  background-color: hsl(202, 61%, 78%);
 }
 
 .app-search-autocomplete-element {
   padding: 1rem 1rem 1rem 1rem;
+}
+
+.app-search-autocomplete-element:hover {
+  background-color: hsl(201, 44%, 71%);
+  cursor: pointer;
 }
 
 /* .app-search-input:focus + .app-search-autocomplete-container {

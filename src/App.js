@@ -1,12 +1,12 @@
 import './App.css';
 import Search from './components/Search';
-
-const API_KEY = '998ec8c1dd074e61965223423242806'
+import FavoriteCities from './components/FavoriteCities';
 
 function App() {
   return (
     <div className="app">
       <Search/>
+      <FavoriteCities/>
     </div>
   );
 }

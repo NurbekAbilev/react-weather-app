@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const API_KEY = '998ec8c1dd074e61965223423242806'
 
@@ -24,7 +24,8 @@ async function querySearch(cityName) {
 
 export default function Search() {
     const [inputValue, setInputValue] = useState('')
-    let [autoCompleteElements, setAutoCompleteElements] = useState([])
+    const [autoCompleteElements, setAutoCompleteElements] = useState([])
+    // const [timer, setTimer] = useState(null)
 
     function add() {
         setAutoCompleteElements([...autoCompleteElements, 'New York'])
@@ -36,24 +37,23 @@ export default function Search() {
         setAutoCompleteElements(newAutoCompleteElements)
     }
 
-    const debouncedSetCities = useCallback(debounce(() => {
-        const data = querySearch(inputValue).then((response) => {
-            console.log('response', data)
+    const debouncedSetCities = debounce((value) => {
+        querySearch(value).then((response) => {
+            setAutoCompleteElements(response)
         })
-    }, 1500), [inputValue])
+    }, 1000)
 
     function handleChange(event) {
         setInputValue(event.target.value)
     }
 
-    // Update debounced value when inputValue changes
     useEffect(() => {
         if (inputValue.trim()) {
             debouncedSetCities(inputValue);
         } else {
             setAutoCompleteElements([]);
         }
-    }, [inputValue]);
+    }, [inputValue, debouncedSetCities]);
 
     return (
         <>
@@ -66,7 +66,7 @@ export default function Search() {
             </div>
             <div className="app-search-autocomplete-container">
                 {autoCompleteElements.map((el) =>
-                    <div className="app-search-autocomplete-element">{el}</div>
+                    <div className="app-search-autocomplete-element">{el.country} {el.name} {el.region}</div>
                 )}
             </div>
         </>
