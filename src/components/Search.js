@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-
-const API_KEY = '998ec8c1dd074e61965223423242806'
+import { API_KEY } from "../Constants";
 
 const debounce = (func, delay) => {
     let timer;
@@ -20,38 +19,31 @@ async function querySearch(cityName) {
     return jsonResponse
 }
 
-export default function Search({addFavorite}) {
+export default function Search({handleSelectCity}) {
     const [inputValue, setInputValue] = useState('')
     const [autoCompleteElements, setAutoCompleteElements] = useState([])
     const [showSuggestion, setShowSuggestions] = useState(false)
-    // const [timer, setTimer] = useState(null)
-
-    function add() {
-        setAutoCompleteElements([...autoCompleteElements, 'New York'])
-    }
-
-    function remove() {
-        const newAutoCompleteElements = autoCompleteElements.slice()
-        newAutoCompleteElements.pop()
-        setAutoCompleteElements(newAutoCompleteElements)
-    }
 
     const debouncedSetCities = useCallback(debounce((value) => {
         querySearch(value).then((response) => {
             setAutoCompleteElements(response)
         })
-    }, 1000),[])
+    }, 500),[])
 
     function handleChange(event) {
         setShowSuggestions(true)
         setInputValue(event.target.value)
     }
 
-    function handleAddFavorite(city) {
+    function selectCity(city) {
         return (event) => {
             setShowSuggestions(false)
-            addFavorite(city)
+            handleSelectCity(city.id)
         }
+    }
+
+    function handleInputFocus(event) {
+        return () => setShowSuggestions(true)
     }
 
     useEffect(() => {
@@ -64,15 +56,12 @@ export default function Search({addFavorite}) {
 
     return (
         <>
-            <button onClick={add}>Add</button>
-            <button onClick={remove}>Remove</button>
-            <h2>Weather app</h2>
             <div className="app-search">
-                <input onChange={handleChange} className="app-search-input" autoComplete="off" placeholder="Enter your city name"></input>
+                <input onChange={handleChange} onFocus={handleChange} className="app-search-input" autoComplete="off" placeholder="Enter city name..."></input>
                 <button className="app-search-button"><img className="app-search-img" alt="search" src="/images/search.png"/></button>
                 <div className="app-search-autocomplete-container" style={{display: showSuggestion ? 'block' : 'none'}}>
                     {autoCompleteElements.map((el) =>
-                        <div key={el.id} className="app-search-autocomplete-element" onClick={handleAddFavorite(el)}>{el.country} {el.name} {el.region}</div>
+                        <div key={el.id} className="app-search-autocomplete-element" onClick={selectCity(el)}>{el.country} {el.name} {el.region}</div>
                     )}
                 </div>
             </div>            

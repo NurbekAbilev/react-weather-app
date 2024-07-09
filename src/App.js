@@ -1,32 +1,43 @@
 import './App.css';
 import Search from './components/Search';
-import FavoriteCities from './components/FavoriteCities';
+import SelectedCity from './components/SelectedCity';
 import { useState } from 'react';
+import { API_KEY } from './Constants';
+
+const INITIAL_CITY_LONDON_ID = 2801268
+
+async function loadCityById(cityID) {
+  const response = await fetch(`http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=id:${cityID}&aqi=yes`)
+  const jsonResponse = await response.json()
+  return jsonResponse
+}
+
 
 function App() {
+  const [isLoading, setLoading] = useState(false)
+  const [city, setCity] = useState(null)
+  // const [cityId, setCityId] = useState(null)
 
-  const [cities, setCities] = useState([
-    {
-      "id": 2801268,
-      "name": "London",
-      "region": "City of London, Greater London",
-      "country": "United Kingdom",
-      "lat": 51.52,
-      "lon": -0.11,
-      "url": "london-city-of-london-greater-london-united-kingdom"
-    }
-  ])
+  function setCityHandler(cityID) {
+    console.log('setCityHandler Event:', cityID)
 
-  function handleAddFavorite(city) {
-      // debugger;
-      const newCities = cities.slice()
-      setCities([...newCities, city])
+    loadCityById(cityID).then((data) => {
+      setCity(data)
+    })
+  }
+
+  if (city === null) {
+    loadCityById(INITIAL_CITY_LONDON_ID).then((data) => {
+      setCity(data)
+    })
   }
 
   return (
     <div className="app">
-      <Search addFavorite={handleAddFavorite}/>
-      <FavoriteCities cities={cities}/>
+      <h1>🌤️ Weather app</h1>
+      <Search handleSelectCity={setCityHandler}/>
+      {isLoading && <p>Loading</p>}
+      {!isLoading && <SelectedCity data={city}/>}
     </div>
   );
 }
