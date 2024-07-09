@@ -91,3 +91,7 @@ body {
 /* .app-search-input:focus + .app-search-autocomplete-container {
   display: block;
 } */
+
+.selected-city-container {
+  border: 1px solid black;
+}

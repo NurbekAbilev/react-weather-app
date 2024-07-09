@@ -10,16 +10,19 @@ const SelectedCity = ({data}) => {
   return (
     <div>
       <div className='selected-city-container'>
-          <ul>
-            <li>{data.location.name}</li>
-            <li>{data.location.region}</li>
-            <li>{data.location.country}</li>
-            <li>temp_c : {data.current.temp_c}</li>
-            <li>temp_f : {data.current.temp_f}</li>
-            <li>condition_text: {data.current.condition.text}</li>
-            <li>condition_icon: {data.current.condition.icon}</li>
-          </ul>
-          
+          <div className='selected-city-location-title' title={data.location.region + data.location.country}>
+            🏙️ {data.location.name}
+          </div>
+          <div className='selected-city-location-time' title={data.location.tz_id}>
+            🕰️ {data.location.localtime}
+          </div>
+          <div>
+            🌡°C{data.current.temp_c}/°F{data.current.temp_f}
+          </div>
+          <div>
+            {data.current.condition.text}
+            <img src={data.current.condition.icon} alt={data.current.condition.text} />
+          </div>
       </div>
     </div>
   );
