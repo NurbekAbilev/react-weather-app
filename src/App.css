@@ -94,4 +94,12 @@ body {
 
 .selected-city-container {
   border: 1px solid black;
+  font-size: 1.5rem;
+  padding: 0.7em;
+  margin-top: 0.5rem;
+  display: flex;
+}
+
+.selected-city-weather-status {
+  flex: 1 
 }
